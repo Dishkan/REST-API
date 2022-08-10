@@ -2,11 +2,11 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/ydhnwb/golang_api/config"
-	"github.com/ydhnwb/golang_api/controller"
-	"github.com/ydhnwb/golang_api/middleware"
-	"github.com/ydhnwb/golang_api/repository"
-	"github.com/ydhnwb/golang_api/service"
+	"book-keeper/config"
+	"book-keeper/controller"
+	"book-keeper/middleware"
+	"book-keeper/repository"
+	"book-keeper/service"
 	"gorm.io/gorm"
 )
 

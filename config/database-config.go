@@ -1,10 +1,10 @@
 package config
 
 import (
+	"book-keeper/entity"
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/ydhnwb/golang_api/entity"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -22,8 +22,6 @@ func SetupDatabaseConnection() *gorm.DB {
 	dbName := os.Getenv("DB_NAME")
 	dbPort := os.Getenv("DB_PORT")
 
-	//  dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
-	//  dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 	dsn := "host=" + dbHost + " user=" + dbUser + " password=" + dbPass +
 		" dbname=" + dbName + " port=" + dbPort + " sslmode=disable TimeZone=Asia/Tashkent"
 

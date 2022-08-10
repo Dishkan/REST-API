@@ -5,12 +5,14 @@ import (
 	"net/http"
 	"strconv"
 
+	"book-keeper/dto"
+
+	"book-keeper/entity"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/ydhnwb/golang_api/dto"
-	"github.com/ydhnwb/golang_api/entity"
-	"github.com/ydhnwb/golang_api/helper"
-	"github.com/ydhnwb/golang_api/service"
+	"book-keeper/helper"
+	"book-keeper/service"
 )
 
 //BookController is a ...

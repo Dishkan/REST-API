@@ -1,7 +1,8 @@
 package repository
 
 import (
-	"github.com/ydhnwb/golang_api/entity"
+	"book-keeper/entity"
+
 	"gorm.io/gorm"
 )
 
