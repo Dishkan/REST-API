@@ -30,13 +30,13 @@ services:
       - DATABASE_HOST=${DB_HOST}
     ports:
       - '5432:5432'
-    volumes:
-      - ./pg_data:/var/lib/postgresql/data
+    # volumes:
+    #   - ./pg_data:/var/lib/postgresql/data
     # networks:
     #   - go-pet-project
 
-volumes:
-  pg_data:
+# volumes:
+#   pg_data:
 
 # Networks to be created to facilitate communication between containers
 # networks:
