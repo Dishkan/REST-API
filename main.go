@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"book-keeper/config"
 	"book-keeper/controller"
 	"book-keeper/middleware"
 	"book-keeper/repository"
 	"book-keeper/service"
+
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
@@ -30,6 +31,7 @@ func main() {
 	authRoutes := r.Group("api/auth")
 	{
 		authRoutes.POST("/login", authController.Login)
+		authRoutes.POST("/logout", authController.Logout)
 		authRoutes.POST("/register", authController.Register)
 	}
 

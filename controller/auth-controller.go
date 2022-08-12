@@ -15,6 +15,7 @@ import (
 //AuthController interface is a contract what this controller can do
 type AuthController interface {
 	Login(ctx *gin.Context)
+	Logout(ctx *gin.Context)
 	Register(ctx *gin.Context)
 }
 
@@ -49,6 +50,10 @@ func (c *authController) Login(ctx *gin.Context) {
 	}
 	response := helper.BuildErrorResponse("Please check again your credential", "Invalid Credential", helper.EmptyObj{})
 	ctx.AbortWithStatusJSON(http.StatusUnauthorized, response)
+}
+
+func (c *authController) Logout(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, "Hello logout func!")
 }
 
 func (c *authController) Register(ctx *gin.Context) {
