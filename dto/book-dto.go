@@ -14,3 +14,4 @@ type BookCreateDTO struct {
 	Description string `json:"description" form:"description" binding:"required"`
 	UserID      uint64 `json:"user_id,omitempty"  form:"user_id,omitempty"`
 }
+

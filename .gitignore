@@ -12,7 +12,8 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
-.pg_data/
+vendor/
+dto/
+pg_data/
 .idea/
 .env
