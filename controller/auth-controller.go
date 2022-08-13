@@ -53,7 +53,7 @@ func (c *authController) Login(ctx *gin.Context) {
 }
 
 func (c *authController) Logout(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, "Hello logout func!")
+	ctx.JSON(http.StatusOK, "Hello logout function!")
 }
 
 func (c *authController) Register(ctx *gin.Context) {
