@@ -9,10 +9,11 @@ import (
 
 	"book-keeper/entity"
 
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
 	"book-keeper/helper"
 	"book-keeper/service"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 )
 
 //BookController is a ...
@@ -69,7 +70,7 @@ func (c *bookController) Insert(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, res)
 	} else {
 		authHeader := context.GetHeader("Authorization")
-		userID := c.getUserIDByToken(authHeader)
+		userID := c.getUserIDByToken(authHeader, context)
 		convertedUserID, err := strconv.ParseUint(userID, 10, 64)
 		if err == nil {
 			bookCreateDTO.UserID = convertedUserID
@@ -90,7 +91,8 @@ func (c *bookController) Update(context *gin.Context) {
 	}
 
 	authHeader := context.GetHeader("Authorization")
-	token, errToken := c.jwtService.ValidateToken(authHeader)
+	metadata, _ := c.jwtService.ExtractTokenMetadata(context.Request)
+	token, errToken := c.jwtService.ValidateToken(authHeader, metadata.TokenUuid)
 	if errToken != nil {
 		panic(errToken.Error())
 	}
@@ -119,7 +121,8 @@ func (c *bookController) Delete(context *gin.Context) {
 	}
 	book.ID = id
 	authHeader := context.GetHeader("Authorization")
-	token, errToken := c.jwtService.ValidateToken(authHeader)
+	metadata, _ := c.jwtService.ExtractTokenMetadata(context.Request)
+	token, errToken := c.jwtService.ValidateToken(authHeader, metadata.TokenUuid)
 	if errToken != nil {
 		panic(errToken.Error())
 	}
@@ -135,8 +138,9 @@ func (c *bookController) Delete(context *gin.Context) {
 	}
 }
 
-func (c *bookController) getUserIDByToken(token string) string {
-	aToken, err := c.jwtService.ValidateToken(token)
+func (c *bookController) getUserIDByToken(token string, context *gin.Context) string {
+	metadata, _ := c.jwtService.ExtractTokenMetadata(context.Request)
+	aToken, err := c.jwtService.ValidateToken(token, metadata.TokenUuid)
 	if err != nil {
 		panic(err.Error())
 	}

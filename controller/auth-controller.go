@@ -53,7 +53,16 @@ func (c *authController) Login(ctx *gin.Context) {
 }
 
 func (c *authController) Logout(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, "Hello logout function!")
+	//If metadata is passed and the tokens valid, delete them from the redis store
+	metadata, _ := c.jwtService.ExtractTokenMetadata(ctx.Request)
+	if metadata != nil {
+		deleteErr := c.jwtService.DeleteTokens(metadata)
+		if deleteErr != nil {
+			ctx.JSON(http.StatusBadRequest, deleteErr.Error())
+			return
+		}
+	}
+	ctx.JSON(http.StatusOK, "Successfully logged out")
 }
 
 func (c *authController) Register(ctx *gin.Context) {

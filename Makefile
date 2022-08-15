@@ -1,5 +1,5 @@
 dev:
-	docker-compose up	
+	docker-compose up		
 
-run: 
-	go run main.go		
+run:
+	go run main.go	

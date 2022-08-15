@@ -20,7 +20,8 @@ func AuthorizeJWT(jwtService service.JWTService) gin.HandlerFunc {
 			c.AbortWithStatusJSON(http.StatusBadRequest, response)
 			return
 		}
-		token, err := jwtService.ValidateToken(authHeader)
+		metadata, _ := jwtService.ExtractTokenMetadata(c.Request)
+		token, err := jwtService.ValidateToken(authHeader, metadata.TokenUuid)
 		if token.Valid {
 			claims := token.Claims.(jwt.MapClaims)
 			log.Println("Claim[user_id]: ", claims["user_id"])

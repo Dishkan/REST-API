@@ -14,7 +14,6 @@
 # Dependency directories (remove the comment below to include it)
 .vscode/
 vendor/
-dto/
 pg_data/
 .idea/
 .env

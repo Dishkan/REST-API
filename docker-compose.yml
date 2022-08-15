@@ -35,8 +35,19 @@ services:
     # networks:
     #   - go-pet-project
 
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - '6379:6379'
+    # volumes:
+    #   - redisDB:/data
+    # networks:
+    #   - go-pet-project
+
 # volumes:
 #   pg_data:
+#   redisDB:
 
 # Networks to be created to facilitate communication between containers
 # networks:

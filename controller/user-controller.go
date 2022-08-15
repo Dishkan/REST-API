@@ -42,7 +42,8 @@ func (c *userController) Update(context *gin.Context) {
 	}
 
 	authHeader := context.GetHeader("Authorization")
-	token, errToken := c.jwtService.ValidateToken(authHeader)
+	metadata, _ := c.jwtService.ExtractTokenMetadata(context.Request)
+	token, errToken := c.jwtService.ValidateToken(authHeader, metadata.TokenUuid)
 	if errToken != nil {
 		panic(errToken.Error())
 	}
@@ -59,7 +60,8 @@ func (c *userController) Update(context *gin.Context) {
 
 func (c *userController) Profile(context *gin.Context) {
 	authHeader := context.GetHeader("Authorization")
-	token, err := c.jwtService.ValidateToken(authHeader)
+	metadata, _ := c.jwtService.ExtractTokenMetadata(context.Request)
+	token, err := c.jwtService.ValidateToken(authHeader, metadata.TokenUuid)
 	if err != nil {
 		panic(err.Error())
 	}
