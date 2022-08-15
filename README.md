@@ -1,7 +1,7 @@
 # golang_api for Book Keeper
 
 First of all, run this command in terminal of the project
- 1)cp .env.example .env
+ 1) cp .env.example .env
 
 Installation 
  1) uncomment app, networks, volumes(to save data of DB) services in Dockerfile or if you have golang locally then follow third point
