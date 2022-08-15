@@ -1,7 +1,7 @@
 package config
 
 import (
-	"book-keeper/entity"
+	model "book-keeper/models"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -30,7 +30,7 @@ func SetupDatabaseConnection() *gorm.DB {
 		panic("Failed to create a connection to database")
 	}
 
-	db.AutoMigrate(&entity.Book{}, &entity.User{})
+	db.AutoMigrate(&model.Book{}, &model.User{})
 	return db
 }
 

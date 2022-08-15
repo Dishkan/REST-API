@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"book-keeper/dto"
-	"book-keeper/entity"
+	dto "book-keeper/dtos"
 	"book-keeper/helper"
+	model "book-keeper/models"
 	"book-keeper/service"
 
 	"github.com/gin-gonic/gin"
@@ -41,7 +41,7 @@ func (c *authController) Login(ctx *gin.Context) {
 		return
 	}
 	authResult := c.authService.VerifyCredential(loginDTO.Email, loginDTO.Password)
-	if v, ok := authResult.(entity.User); ok {
+	if v, ok := authResult.(model.User); ok {
 		generatedToken := c.jwtService.GenerateToken(strconv.FormatUint(v.ID, 10))
 		v.Token = generatedToken
 		response := helper.BuildResponse(true, "OK!", v)

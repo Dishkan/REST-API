@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"book-keeper/dto"
-	"book-keeper/entity"
+	dto "book-keeper/dtos"
+	model "book-keeper/models"
 	"book-keeper/repository"
 
 	"github.com/mashingan/smapping"
@@ -13,11 +13,11 @@ import (
 
 //BookService is a ....
 type BookService interface {
-	Insert(b dto.BookCreateDTO) entity.Book
-	Update(b dto.BookUpdateDTO) entity.Book
-	Delete(b entity.Book)
-	All() []entity.Book
-	FindByID(bookID uint64) entity.Book
+	Insert(b dto.BookCreateDTO) model.Book
+	Update(b dto.BookUpdateDTO) model.Book
+	Delete(b model.Book)
+	All() []model.Book
+	FindByID(bookID uint64) model.Book
 	IsAllowedToEdit(userID string, bookID uint64) bool
 }
 
@@ -32,8 +32,8 @@ func NewBookService(bookRepo repository.BookRepository) BookService {
 	}
 }
 
-func (service *bookService) Insert(b dto.BookCreateDTO) entity.Book {
-	book := entity.Book{}
+func (service *bookService) Insert(b dto.BookCreateDTO) model.Book {
+	book := model.Book{}
 	err := smapping.FillStruct(&book, smapping.MapFields(&b))
 	if err != nil {
 		log.Fatalf("Failed map %v: ", err)
@@ -42,8 +42,8 @@ func (service *bookService) Insert(b dto.BookCreateDTO) entity.Book {
 	return res
 }
 
-func (service *bookService) Update(b dto.BookUpdateDTO) entity.Book {
-	book := entity.Book{}
+func (service *bookService) Update(b dto.BookUpdateDTO) model.Book {
+	book := model.Book{}
 	err := smapping.FillStruct(&book, smapping.MapFields(&b))
 	if err != nil {
 		log.Fatalf("Failed map %v: ", err)
@@ -52,15 +52,15 @@ func (service *bookService) Update(b dto.BookUpdateDTO) entity.Book {
 	return res
 }
 
-func (service *bookService) Delete(b entity.Book) {
+func (service *bookService) Delete(b model.Book) {
 	service.bookRepository.DeleteBook(b)
 }
 
-func (service *bookService) All() []entity.Book {
+func (service *bookService) All() []model.Book {
 	return service.bookRepository.AllBook()
 }
 
-func (service *bookService) FindByID(bookID uint64) entity.Book {
+func (service *bookService) FindByID(bookID uint64) model.Book {
 	return service.bookRepository.FindBookByID(bookID)
 }
 

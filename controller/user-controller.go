@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"book-keeper/dto"
+	dto "book-keeper/dtos"
 	"book-keeper/helper"
 	"book-keeper/service"
 

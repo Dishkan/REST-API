@@ -3,8 +3,8 @@ package service
 import (
 	"log"
 
-	"book-keeper/dto"
-	"book-keeper/entity"
+	dto "book-keeper/dtos"
+	model "book-keeper/models"
 	"book-keeper/repository"
 
 	"github.com/mashingan/smapping"
@@ -14,8 +14,8 @@ import (
 //AuthService is a contract about something that this service can do
 type AuthService interface {
 	VerifyCredential(email string, password string) interface{}
-	CreateUser(user dto.RegisterDTO) entity.User
-	FindByEmail(email string) entity.User
+	CreateUser(user dto.RegisterDTO) model.User
+	FindByEmail(email string) model.User
 	IsDuplicateEmail(email string) bool
 }
 
@@ -32,7 +32,7 @@ func NewAuthService(userRep repository.UserRepository) AuthService {
 
 func (service *authService) VerifyCredential(email string, password string) interface{} {
 	res := service.userRepository.VerifyCredential(email, password)
-	if v, ok := res.(entity.User); ok {
+	if v, ok := res.(model.User); ok {
 		comparedPassword := comparePassword(v.Password, []byte(password))
 		if v.Email == email && comparedPassword {
 			return res
@@ -42,8 +42,8 @@ func (service *authService) VerifyCredential(email string, password string) inte
 	return false
 }
 
-func (service *authService) CreateUser(user dto.RegisterDTO) entity.User {
-	userToCreate := entity.User{}
+func (service *authService) CreateUser(user dto.RegisterDTO) model.User {
+	userToCreate := model.User{}
 	err := smapping.FillStruct(&userToCreate, smapping.MapFields(&user))
 	if err != nil {
 		log.Fatalf("Failed map %v", err)
@@ -52,7 +52,7 @@ func (service *authService) CreateUser(user dto.RegisterDTO) entity.User {
 	return res
 }
 
-func (service *authService) FindByEmail(email string) entity.User {
+func (service *authService) FindByEmail(email string) model.User {
 	return service.userRepository.FindByEmail(email)
 }
 

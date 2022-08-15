@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"book-keeper/dto"
+	dto "book-keeper/dtos"
 
-	"book-keeper/entity"
+	model "book-keeper/models"
 
 	"book-keeper/helper"
 	"book-keeper/service"
@@ -39,7 +39,7 @@ func NewBookController(bookServ service.BookService, jwtServ service.JWTService)
 }
 
 func (c *bookController) All(context *gin.Context) {
-	var books []entity.Book = c.bookService.All()
+	var books []model.Book = c.bookService.All()
 	res := helper.BuildResponse(true, "OK", books)
 	context.JSON(http.StatusOK, res)
 }
@@ -52,8 +52,8 @@ func (c *bookController) FindByID(context *gin.Context) {
 		return
 	}
 
-	var book entity.Book = c.bookService.FindByID(id)
-	if (book == entity.Book{}) {
+	var book model.Book = c.bookService.FindByID(id)
+	if (book == model.Book{}) {
 		res := helper.BuildErrorResponse("Data not found", "No data with given id", helper.EmptyObj{})
 		context.JSON(http.StatusNotFound, res)
 	} else {
@@ -113,7 +113,7 @@ func (c *bookController) Update(context *gin.Context) {
 }
 
 func (c *bookController) Delete(context *gin.Context) {
-	var book entity.Book
+	var book model.Book
 	id, err := strconv.ParseUint(context.Param("id"), 0, 0)
 	if err != nil {
 		response := helper.BuildErrorResponse("Failed to get id", "No param id were found", helper.EmptyObj{})

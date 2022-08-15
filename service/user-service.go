@@ -3,8 +3,8 @@ package service
 import (
 	"log"
 
-	"book-keeper/dto"
-	"book-keeper/entity"
+	dto "book-keeper/dtos"
+	model "book-keeper/models"
 	"book-keeper/repository"
 
 	"github.com/mashingan/smapping"
@@ -12,8 +12,8 @@ import (
 
 //UserService is a contract.....
 type UserService interface {
-	Update(user dto.UserUpdateDTO) entity.User
-	Profile(userID string) entity.User
+	Update(user dto.UserUpdateDTO) model.User
+	Profile(userID string) model.User
 }
 
 type userService struct {
@@ -27,8 +27,8 @@ func NewUserService(userRepo repository.UserRepository) UserService {
 	}
 }
 
-func (service *userService) Update(user dto.UserUpdateDTO) entity.User {
-	userToUpdate := entity.User{}
+func (service *userService) Update(user dto.UserUpdateDTO) model.User {
+	userToUpdate := model.User{}
 	err := smapping.FillStruct(&userToUpdate, smapping.MapFields(&user))
 	if err != nil {
 		log.Fatalf("Failed map %v:", err)
@@ -37,6 +37,6 @@ func (service *userService) Update(user dto.UserUpdateDTO) entity.User {
 	return updatedUser
 }
 
-func (service *userService) Profile(userID string) entity.User {
+func (service *userService) Profile(userID string) model.User {
 	return service.userRepository.ProfileUser(userID)
 }
