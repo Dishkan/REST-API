@@ -1,4 +1,4 @@
-# golang_rest_api for Book Keeper
+# Golang_rest_api for Book Keeper
 
 First of all, run this command in the terminal of the project
  1) cp .env.example .env
