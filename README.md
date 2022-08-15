@@ -1,5 +1,6 @@
 # golang_api for Book Keeper
- First of all, run this command in terminal of the project
+
+First of all, run this command in terminal of the project
  1)cp .env.example .env
 
 Installation 
@@ -7,7 +8,7 @@ Installation
  2) docker-compose build
  3) docker-compose up
 
- Using go
+Using go
  1) follow second point or use "go mod init book-keeper" after deletion of go.mod and go.sum 
  2) go mod tidy
  3) go run main.go or make run
