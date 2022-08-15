@@ -1,6 +1,6 @@
 # golang_api for Book Keeper
 
-First of all, run this command in terminal of the project
+First of all, run this command in the terminal of the project
  1) cp .env.example .env
 
 Installation 
