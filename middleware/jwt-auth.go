@@ -7,7 +7,6 @@ import (
 	"book-keeper/helper"
 	"book-keeper/service"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,9 +22,7 @@ func AuthorizeJWT(jwtService service.JWTService) gin.HandlerFunc {
 		metadata, _ := jwtService.ExtractTokenMetadata(c.Request)
 		token, err := jwtService.ValidateToken(authHeader, metadata.TokenUuid)
 		if token.Valid {
-			claims := token.Claims.(jwt.MapClaims)
-			log.Println("Claim[user_id]: ", claims["user_id"])
-			log.Println("Claim[issuer] :", claims["issuer"])
+			c.Next()
 		} else {
 			log.Println(err)
 			response := helper.BuildErrorResponse("Token is not valid", err.Error(), nil)
