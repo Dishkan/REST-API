@@ -15,6 +15,7 @@ import (
 //JWTService is a contract of what jwtService can do
 type JWTService interface {
 	GenerateToken(userID string) string
+	RefreshToken(userID string, tokenUuid string) string
 	ValidateToken(token string, tokenUuid string) (*jwt.Token, error)
 	ExtractTokenMetadata(*http.Request) (*jwtCustomClaim, error)
 	DeleteTokens(*jwtCustomClaim) error
@@ -79,6 +80,19 @@ func (j *jwtService) GenerateToken(UserID string) string {
 	}
 	client.Set(TokenUuid, t, at.Sub(time.Now())).Result()
 	return t
+}
+
+func (j *jwtService) RefreshToken(UserID string, tokenUuid string) string {
+	_, err := client.Get(tokenUuid).Result()
+	if err != nil {
+		return "Token is not valid to refresh old one"
+	}
+	_, err = client.Del(tokenUuid).Result()
+	if err != nil {
+		return "Something went wrong in deleting"
+	}
+	return j.GenerateToken(UserID)
+
 }
 
 func (j *jwtService) ValidateToken(token string, tokenUuid string) (*jwt.Token, error) {

@@ -15,8 +15,9 @@ import (
 //AuthController interface is a contract what this controller can do
 type AuthController interface {
 	Login(ctx *gin.Context)
-	Logout(ctx *gin.Context)
 	Register(ctx *gin.Context)
+	Logout(ctx *gin.Context)
+	RefreshToken(ctx *gin.Context)
 }
 
 type authController struct {
@@ -63,6 +64,14 @@ func (c *authController) Logout(ctx *gin.Context) {
 		}
 	}
 	ctx.JSON(http.StatusOK, "Successfully logged out")
+}
+
+func (c *authController) RefreshToken(ctx *gin.Context) {
+	metadata, _ := c.jwtService.ExtractTokenMetadata(ctx.Request)
+	refreshedToken := c.jwtService.RefreshToken(metadata.UserID, metadata.TokenUuid)
+	response := helper.BuildResponse(true, "OK!", refreshedToken)
+	ctx.JSON(http.StatusOK, response)
+	return
 }
 
 func (c *authController) Register(ctx *gin.Context) {
